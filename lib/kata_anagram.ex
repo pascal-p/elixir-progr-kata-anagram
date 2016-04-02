@@ -1,0 +1,2 @@
+defmodule KataAnagram do
+end
