@@ -1,6 +1,15 @@
 # KataAnagram
 
-**TODO: Add description**
+A first try with Elixir.
+  This programs computes all the anagrams from a given dictionnary. It then exposes
+  some functions to
+  - check if two words are anagrams,
+  - to list the anagrams
+  - ...
+
+## TODO
+  command line interface + test
+  packaging
 
 ## Installation
 
