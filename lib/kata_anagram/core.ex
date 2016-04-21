@@ -1,4 +1,4 @@
-defmodule KataAnagram.MyCore do
+defmodule KataAnagram.Core do
   require KataAnagram.Struct
 
   @moduledoc """
@@ -16,16 +16,15 @@ defmodule KataAnagram.MyCore do
   anagrams = KataAnagram.Core.main, set up the state held by the agent
 
   ## Examples
-    iex> KataAnagram.MyCore.main("./resources/s_wordlist.txt")
+    iex> KataAnagram.Core.main("./resources/wordlist_test.txt")
     :ok
   """
-  def main(file \\ "./resources/s_wordlist.txt") do
+  def main(file \\ "./resources/wordlist.txt") do
     start_agent
-    my_map = %{}
     my_map = File.stream!(file, [:read, :utf8], :line)
     |> Enum.filter_map(&exclude_non_word/1, &String.strip/1)
     |> Enum.map(&calculate_key/1)
-    |> Enum.reduce(my_map, &add_to/2)
+    |> Enum.reduce(%{}, &add_to/2)
     my_list = to_list(my_map)
     Agent.update(@name,
       fn ds ->
@@ -62,10 +61,10 @@ defmodule KataAnagram.MyCore do
   @doc """
 
   ## Examples
-    iex> KataAnagram.MyCore.anagram?("rate", "tare")
+    iex> KataAnagram.Core.anagram?("rate", "tare")
     true
 
-    iex> KataAnagram.MyCore.anagram?("foo", "bar")
+    iex> KataAnagram.Core.anagram?("foo", "bar")
     false
 
   """
@@ -83,7 +82,7 @@ defmodule KataAnagram.MyCore do
     ds_get_map
   end
 
-  # Private
+  # == Private ==
   #
   # This function returns a list, eliminating singleton or empty list
   defp to_list(map) do
